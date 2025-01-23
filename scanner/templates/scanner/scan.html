@@ -1,0 +1,53 @@
+{% extends "core/base.html" %}
+{% block title %}Scan QR{% endblock title %}
+{% block content %}
+<h1 class="main-heading">Bharat Petrol Pump Payment</h1>
+<div class="center-container">
+    <div class="container">
+        <h1>Scan QR Code</h1>
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="text" name="mobile_number" placeholder="Enter 10-digit mobile number" required pattern="\d{10}">
+            <input type="file" name="qr_image" accept="image/*" id="qr-input">
+            <button type="submit">Scan</button>
+        </form>
+
+         <!-- Show uploaded image preview and result -->
+         <div class="qr-preview">
+            {% if qr_image_url %}
+                <img src="{{ qr_image_url }}" alt="QR Code Image">
+            {% endif %}
+            <h2>{{ result }}</h2>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Preview the uploaded QR code image before submitting
+    const qrInput = document.getElementById('qr-input');
+    qrInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.alt = 'QR Code Preview';
+                img.style.maxWidth = '200px';
+                img.style.marginLeft = '20px';
+                img.style.border = '1px solid #ddd';
+                img.style.borderRadius = '8px';
+                img.style.padding = '5px';
+
+                // Replace or add the preview image
+                const previewContainer = document.querySelector('.qr-preview');
+                if (previewContainer.querySelector('img')) {
+                    previewContainer.querySelector('img').remove();
+                }
+                previewContainer.prepend(img);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+{% endblock content %}

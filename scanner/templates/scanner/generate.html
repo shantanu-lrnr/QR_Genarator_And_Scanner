@@ -1,0 +1,26 @@
+{% extends "core/base.html" %}
+{% block title %}Generate QR{% endblock title %}
+{% block content %}
+<h1 class="main-heading">Bharat Petrol Pump Payment</h1>
+<div class="center-container">
+    <div class="container">
+        <h1>Generate QR Code</h1>
+        <form action="{% url 'generate_qr' %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="mobile_number" placeholder="Enter 10-digit mobile number" required pattern="\d{10}">
+            <input type="text" name="qr_data" placeholder="Enter text to generate QR code" required>
+            <button type="submit">Generate</button>
+        </form>
+
+        {% if qr_image_url %}
+            <div class="qr-preview">
+              <h2>Your QR Code:</h2>
+              <img src="{{ qr_image_url }}" alt="Generated QR Code">
+              <br>
+              <a href="{{ qr_image_url }}" download class="download-button">Save QR</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+{% endblock content %}

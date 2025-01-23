@@ -1,0 +1,19 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+{% block content %}
+<div class="welcome-section">
+    <h1>Welcome to Bharat Petrol Pump Payment</h1>
+    <p>Fast and secure payment solutions for your fuel needs. Generate and scan QR codes effortlessly.</p>
+    <div class="quick-actions">
+        <a href="{% url 'generate_qr' %}" class="button">Generate QR</a>
+        <a href="{% url 'scan_qr' %}" class="button">Scan QR</a>
+    </div>
+</div>
+
+{% comment %} <div class="banner">
+    <img src="{% static "core/images/petrol-station.webp" %}" alt="Petrol Pump" class="banner-img">
+</div> {% endcomment %}
+
+
+{% endblock content %}
